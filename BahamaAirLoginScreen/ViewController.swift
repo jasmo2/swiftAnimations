@@ -90,7 +90,7 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        heading.center.x  -= view.bounds.width
+        heading.center.x  -= view.bounds.width
         username.center.x -= view.bounds.width
         password.center.x -= view.bounds.width
         
