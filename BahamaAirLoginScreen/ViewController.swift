@@ -60,11 +60,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let flyRight = CABasicAnimation(keyPath: "position.x")
-        flyRight.fromValue = -view.bounds.size.width/2
-        flyRight.toValue = view.bounds.size.width/2
-        flyRight.duration = 0.5
-        heading.layer.add(flyRight, forKey: nil)
+        heading.layer.add(getFlyRightAnimation(), forKey: nil)
         
         //set up the UI
         loginButton.layer.cornerRadius = 8.0
@@ -96,8 +92,14 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        username.center.x -= view.bounds.width
-        password.center.x -= view.bounds.width
+        let flyRight = getFlyRightAnimation()
+        flyRight.fillMode = kCAFillModeBoth
+        flyRight.beginTime = CACurrentMediaTime() + 0.3
+        username.layer.add(flyRight, forKey: nil)
+        
+        flyRight.beginTime = CACurrentMediaTime() + 0.45
+        password.layer.add(flyRight, forKey: nil)
+        
         
         cloud1.alpha = 0
         cloud2.alpha = 0
@@ -110,20 +112,6 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        UIView.animate(withDuration: 0.5, delay: 0.4, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: [.curveEaseInOut],
-                       animations: {
-                        self.username.center.x += self.view.bounds.width
-        },
-                       completion: nil
-        )
-        UIView.animate(withDuration: 0.5, delay: 0.3, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0,
-                       options: [], animations: {
-                        self.password.center.x += self.view.bounds.width
-        },
-                       completion: nil
-        )
-        
         
         UIView.animate(withDuration: 0.5, delay: 0.5, options: [.curveEaseIn], animations: {
             self.cloud1.alpha = 1
@@ -214,6 +202,14 @@ class ViewController: UIViewController {
         } )
     }
     
+    func getFlyRightAnimation() -> CABasicAnimation {
+        let flyRight = CABasicAnimation(keyPath: "position.x")
+        flyRight.fromValue = -view.bounds.size.width/2
+        flyRight.toValue = view.bounds.size.width/2
+        flyRight.duration = 0.5
+        
+        return flyRight
+    }
     func removeMessage(index: Int) {
         UIView.animate(withDuration: 0.33, delay: 0.0, options: [],
                        animations: {
