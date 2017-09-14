@@ -101,37 +101,33 @@ class ViewController: UIViewController {
         flyRight.beginTime = CACurrentMediaTime() + 0.45
         password.layer.add(flyRight, forKey: nil)
         
-        
-        cloud1.alpha = 0
-        cloud2.alpha = 0
-        cloud3.alpha = 0
-        cloud4.alpha = 0
-        
         loginButton.center.y += 30.0
         loginButton.alpha = 0.0
         
         username.layer.position.x = view.bounds.size.width / 2
         password.layer.position.x = view.bounds.size.width / 2
+        
+        let opacityAnimation = CABasicAnimation(keyPath: "alpha")
+        opacityAnimation.fromValue = 0
+        opacityAnimation.toValue = 1.0
+        opacityAnimation.duration = 0.5
+        opacityAnimation.fillMode = kCAFillModeBackwards
+        
+        opacityAnimation.beginTime = CACurrentMediaTime() + 0.5
+        cloud2.layer.add(opacityAnimation, forKey: nil)
+        
+        opacityAnimation.beginTime = CACurrentMediaTime() + 0.7
+        cloud2.layer.add(opacityAnimation, forKey: nil)
+        
+        opacityAnimation.beginTime = CACurrentMediaTime() + 0.9
+        cloud3.layer.add(opacityAnimation, forKey: nil)
+        
+        opacityAnimation.beginTime = CACurrentMediaTime() + 1.1
+        cloud4.layer.add(opacityAnimation, forKey: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        UIView.animate(withDuration: 0.5, delay: 0.5, options: [.curveEaseIn], animations: {
-            self.cloud1.alpha = 1
-        }, completion: nil)
-        
-        UIView.animate(withDuration: 0.5, delay: 0.7, options: [.curveEaseIn], animations: {
-            self.cloud2.alpha = 1
-        }, completion: nil)
-        
-        UIView.animate(withDuration: 0.5, delay: 0.9, options: [.curveEaseIn], animations: {
-            self.cloud3.alpha = 1
-        }, completion: nil)
-        
-        UIView.animate(withDuration: 0.5, delay: 1.1, options: [.curveEaseIn], animations: {
-            self.cloud4.alpha = 1
-        }, completion: nil)
         
         UIView.animate(withDuration: 0.5, delay: 0.5,
                        usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: [],
