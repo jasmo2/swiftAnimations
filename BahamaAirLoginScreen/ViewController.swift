@@ -95,6 +95,7 @@ class ViewController: UIViewController {
         let flyRight = getFlyRightAnimation()
         flyRight.fillMode = kCAFillModeBoth
         flyRight.beginTime = CACurrentMediaTime() + 0.3
+
         username.layer.add(flyRight, forKey: nil)
         
         flyRight.beginTime = CACurrentMediaTime() + 0.45
@@ -108,6 +109,9 @@ class ViewController: UIViewController {
         
         loginButton.center.y += 30.0
         loginButton.alpha = 0.0
+        
+        username.layer.position.x = view.bounds.size.width / 2
+        password.layer.position.x = view.bounds.size.width / 2
     }
     
     override func viewDidAppear(_ animated: Bool) {
