@@ -60,6 +60,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let flyRight = CABasicAnimation(keyPath: "position.x")
+        flyRight.fromValue = -view.bounds.size.width/2
+        flyRight.toValue = view.bounds.size.width/2
+        flyRight.duration = 0.5
+        heading.layer.add(flyRight, forKey: nil)
+        
         //set up the UI
         loginButton.layer.cornerRadius = 8.0
         loginButton.layer.masksToBounds = true
@@ -90,7 +96,6 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        heading.center.x  -= view.bounds.width
         username.center.x -= view.bounds.width
         password.center.x -= view.bounds.width
         
@@ -106,9 +111,6 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        UIView.animate(withDuration: 0.5) {
-            self.heading.center.x += self.view.bounds.width
-        }
         UIView.animate(withDuration: 0.5, delay: 0.4, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: [.curveEaseInOut],
                        animations: {
                         self.username.center.x += self.view.bounds.width
