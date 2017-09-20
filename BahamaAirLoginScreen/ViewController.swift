@@ -147,7 +147,7 @@ class ViewController: UIViewController {
         scaleDown.toValue = 1.0
         
         let rotate = CABasicAnimation(keyPath: "transform.rotation")
-        rotate.fromValue = CGFloat(M_PI_4)
+        rotate.fromValue = Double.pi / 4
         rotate.toValue = 0.0
         
         let fade = CABasicAnimation(keyPath: "opacity")
@@ -302,7 +302,7 @@ extension ViewController: CAAnimationDelegate {
                 //form field found
                 let layer = anim.value(forKey: "layer") as? CALayer
                 anim.setValue(nil, forKey: "layer")
-
+                
                 let pulse = CASpringAnimation(keyPath: "transform.scale")
                 pulse.damping = 7.5
                 pulse.fromValue = 1.25
@@ -328,7 +328,7 @@ extension ViewController: CAAnimationDelegate {
 }
 
 func tintBackgroundColor(layer: CALayer, toColor: UIColor) {
-    let tint = CABasicAnimation(keyPath: "backgroundColor")
+    let tint = CASpringAnimation(keyPath: "backgroundColor")
     tint.fromValue = layer.backgroundColor
     tint.toValue = toColor.cgColor
     tint.duration = 0.5
@@ -337,17 +337,20 @@ func tintBackgroundColor(layer: CALayer, toColor: UIColor) {
 }
 
 func roundCorners(layer: CALayer, toRadius: CGFloat) {
-    let round = CABasicAnimation(keyPath: "cornerRadius")
+    let round = CASpringAnimation(keyPath: "cornerRadius")
     round.fromValue = layer.cornerRadius
     round.toValue = toRadius
-    round.duration = 0.5
+    round.duration = round.settlingDuration
+    round.damping = 75
+    round.mass = 10.0
+    round.stiffness = 1500
     layer.add(round, forKey: nil)
     layer.cornerRadius = toRadius
 }
 
 extension ViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        print(info.layer.animationKeys())
+        print(info.layer.animationKeys() ?? "info.layer: nil[")
         info.layer.removeAnimation(forKey: "infoappear")
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
