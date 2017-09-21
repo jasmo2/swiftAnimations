@@ -65,10 +65,10 @@ class ViewController: UIViewController {
         )
         
         myAvatar.bounceOff(
-            point: rightBouncePoint, morphoSize: morphSize
+            point: rightBouncePoint, morphSize: morphSize
         )
         opponentAvatar.bounceOff(
-            point: leftBouncePoint, morphoSize: morphSize
+            point: leftBouncePoint, morphSize: morphSize
         )
     }
 }

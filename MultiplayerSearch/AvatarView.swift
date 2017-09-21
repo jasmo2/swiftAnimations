@@ -94,7 +94,7 @@ class AvatarView: UIView {
         //Size the label
         label.frame = CGRect(x: 0.0, y: bounds.size.height + 10.0, width: bounds.size.width, height: 24.0)
     }
-    func bounceOff (point: CGPoint, morphoSize: CGSize) {
+    func bounceOff (point: CGPoint, morphSize: CGSize) {
         let originalCenter = center
         
         UIView.animate(
@@ -102,9 +102,25 @@ class AvatarView: UIView {
                 self.center = point
         }) { _ in
             delay(seconds: 0.1, completion: {
-                self.bounceOff(point: originalCenter, morphoSize: morphoSize)
+                self.bounceOff(point: originalCenter, morphSize: morphSize)
             })
         }
+        
+        let morphedFrame = (originalCenter.x > point.x) ?
+            CGRect(x: 0.0, y: bounds.height - morphSize.height,
+                   width: morphSize.width, height: morphSize.height):
+            CGRect(x: bounds.width - morphSize.width,
+                   y: bounds.height - morphSize.height,
+                   width: morphSize.width, height: morphSize.height)
+        
+        let morphAnimation = CABasicAnimation(keyPath: "path")
+        morphAnimation.duration = animationDuration
+        morphAnimation.toValue = UIBezierPath(ovalIn: morphedFrame).cgPath
+        
+        morphAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        
+        circleLayer.add(morphAnimation, forKey: nil)
+        maskLayer.add(morphAnimation, forKey: nil)
     }
     
 }
